@@ -21,7 +21,7 @@ class StepType(str, Enum):
     BUILD_KNOWLEDGE = "build_knowledge"
     EMBED = "embed"
     GENERATE_OUTPUT = "generate_output"
-    AGENT_TASK = "agent_task"  # Phase 12+ multi-agent extension
+    AGENT_TASK = "agent_task"
 
 
 class RunStatus(str, Enum):

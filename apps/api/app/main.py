@@ -15,6 +15,7 @@ from app.core.logging import get_logger, setup_logging
 from app.core.middleware import RequestIdMiddleware
 from app.core.observability import setup_telemetry
 from app.core.settings import AppSettings
+from app.api import router as api_router
 
 settings = AppSettings()
 obs_settings = settings.observability()
@@ -60,6 +61,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.add_middleware(RequestIdMiddleware)
+app.include_router(api_router)
 
 
 # ── Routes ────────────────────────────────────────────────────────────────────

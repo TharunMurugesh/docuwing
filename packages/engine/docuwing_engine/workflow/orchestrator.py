@@ -78,8 +78,6 @@ class WorkflowOrchestrator:
         )
         await self._repo.save_run(run)
 
-        # In a real implementation (Phase 12), this dispatches to Arq.
-        # For Phase 1, we simulate immediate execution to prove the DAG logic.
         asyncio.create_task(self._execute_run(run, workflow_def))
 
         return run
@@ -99,26 +97,22 @@ class WorkflowOrchestrator:
         )
 
         try:
-            # Build dependency graph
             step_runs: dict[str, WorkflowStepRun] = {}
             for step_def in workflow_def.steps:
                 step_run = WorkflowStepRun(run_id=run.id, step_id=step_def.id)
                 await self._repo.save_step_run(step_run)
                 step_runs[step_def.id] = step_run
 
-            # Topological execution
             completed_steps: set[str] = set()
             in_progress: set[asyncio.Task[None]] = set()
 
             while len(completed_steps) < len(workflow_def.steps):
-                # Find ready steps
                 for step_def in workflow_def.steps:
                     if step_def.id in completed_steps or step_def.id in [
                         t.get_name() for t in in_progress
                     ]:
                         continue
 
-                    # Are dependencies met?
                     if all(dep in completed_steps for dep in step_def.depends_on):
                         task = asyncio.create_task(
                             self._execute_step(run, step_def, step_runs[step_def.id]),
@@ -129,7 +123,6 @@ class WorkflowOrchestrator:
                 if not in_progress and len(completed_steps) < len(workflow_def.steps):
                     raise RuntimeError("Deadlock in workflow DAG")
 
-                # Wait for at least one step to complete
                 done, in_progress = await asyncio.wait(
                     in_progress, return_when=asyncio.FIRST_COMPLETED
                 )
@@ -137,7 +130,6 @@ class WorkflowOrchestrator:
                 for task in done:
                     completed_step_id = task.get_name()
                     completed_steps.add(completed_step_id)
-                    # task exception handling omitted in this MVP
 
             run.status = RunStatus.SUCCEEDED
             run.completed_at = datetime.now(UTC)
@@ -186,7 +178,6 @@ class WorkflowOrchestrator:
             )
         )
 
-        # Simulate work
         await asyncio.sleep(0.1)
 
         step_run.status = RunStatus.SUCCEEDED

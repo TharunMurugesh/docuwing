@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   # ── Data Stores ──────────────────────────────────────────────────────
   postgres:
@@ -90,8 +88,10 @@ services:
       - api
     volumes:
       - ../../apps/web:/app/apps/web
+      - web_node_modules:/app/apps/web/node_modules
 
 volumes:
   postgres_data:
   redis_data:
   minio_data:
+  web_node_modules:

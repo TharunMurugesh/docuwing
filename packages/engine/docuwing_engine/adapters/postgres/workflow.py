@@ -22,7 +22,6 @@ class PostgresWorkflowRepository(WorkflowRepository):
         self._session_factory = session_factory
 
     async def save_definition(self, definition: Any) -> Any:
-        # Phase 1: MVP stub, real definition persistence added later
         return definition
 
     async def get_definition(self, definition_id: str) -> Any | None:

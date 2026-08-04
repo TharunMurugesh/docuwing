@@ -57,7 +57,6 @@ class DocuwingEngine:
         """Get the status of a workflow run."""
         return await self.repositories.workflows.get_run(run_id)
 
-    # Phase 2+ placeholders — signatures will be formalised in later phases
     async def process_document(self, *args: Any, **kwargs: Any) -> Any:
         raise NotImplementedError("Implemented in Phase 2")
 

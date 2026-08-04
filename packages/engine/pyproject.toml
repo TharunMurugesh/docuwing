@@ -13,15 +13,14 @@ dependencies = [
     "structlog>=24.1",
     "opentelemetry-api>=1.25",
     "opentelemetry-sdk>=1.25",
-    # Phase 2: Parsers
     "pymupdf>=1.24",
     "python-docx>=1.1",
     "openpyxl>=3.1",
-    # Phase 3: OCR + Security
     "pytesseract>=0.3",
     "Pillow>=10.0",
     "python-magic>=0.4",
     "pyyaml>=6.0",
+    "pgvector>=0.3",
 ]
 
 [project.optional-dependencies]
@@ -35,12 +34,12 @@ build-backend = "hatchling.build"
 packages = ["docuwing_engine"]
 
 [project.entry-points."docuwing.plugins"]
-# Parser plugins
 pdf_text_parser = "docuwing_engine.parsers.pdf_text.plugin:PdfTextParser"
 docx_parser = "docuwing_engine.parsers.docx.plugin:DocxParser"
 xlsx_parser = "docuwing_engine.parsers.xlsx.plugin:XlsxParser"
 csv_parser = "docuwing_engine.parsers.csv.plugin:CsvParser"
-# Phase 3: OCR + scanned parsers
 pdf_scanned_parser = "docuwing_engine.parsers.pdf_scanned:PdfScannedParserPlugin"
 image_parser = "docuwing_engine.parsers.image:ImageParserPlugin"
 tesseract_ocr = "docuwing_engine.ocr.tesseract:TesseractOCRPlugin"
+openai_llm = "docuwing_engine.llm.openai_provider.plugin:OpenAIProvider"
+ollama_llm = "docuwing_engine.llm.ollama_provider.plugin:OllamaProvider"

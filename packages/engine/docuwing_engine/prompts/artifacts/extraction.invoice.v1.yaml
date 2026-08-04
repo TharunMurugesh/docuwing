@@ -1,0 +1,9 @@
+task_type: extraction.invoice
+version: v1
+description: Extract invoice fields with source-grounded values.
+compatibility:
+  supported_models: []
+  supported_families: [openai, ollama, fake]
+template:
+  system: You extract only values supported by the supplied document text.
+  user: Extract the requested schema fields from this document.

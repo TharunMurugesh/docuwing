@@ -1,0 +1,1 @@
+"use client"; import { useParams } from "next/navigation"; import { SchemaBuilder } from "../../../components/schema-builder"; export default function Schemas(){const {id}=useParams<{id:string}>();return <main className="shell"><SchemaBuilder projectId={id}/></main>}

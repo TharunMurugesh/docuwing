@@ -67,7 +67,7 @@ class PromptRegistry:
         self._settings = settings or PromptRegistrySettings()
         self._artifacts: dict[
             str, dict[str, PromptArtifact]
-        ] = {}  # task_type -> version -> artifact
+        ] = {}
         self._load_artifacts()
 
     def _load_artifacts(self) -> None:
