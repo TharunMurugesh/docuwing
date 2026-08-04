@@ -1,0 +1,17 @@
+task_type: "classification.document_type"
+version: "v1"
+description: "Tier 2 fallback document classifier."
+compatibility:
+  supported_models: ["gpt-4o", "gpt-4o-mini"]
+  supported_families: ["openai", "anthropic"]
+template:
+  system: |
+    You are an expert document classifier.
+    Given the following text extracted from a document, classify it into one of the provided categories.
+  user: |
+    Categories: {{ categories }}
+    
+    Document Text:
+    {{ text }}
+    
+    Output exactly the category name, nothing else.

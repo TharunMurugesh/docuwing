@@ -1,0 +1,46 @@
+[project]
+name = "docuwing-engine"
+version = "0.1.0"
+description = "Docuwing document intelligence engine — core extraction, knowledge, and workflow runtime."
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+    "sqlalchemy[asyncio]>=2.0",
+    "asyncpg>=0.29",
+    "alembic>=1.13",
+    "arq>=0.26",
+    "structlog>=24.1",
+    "opentelemetry-api>=1.25",
+    "opentelemetry-sdk>=1.25",
+    # Phase 2: Parsers
+    "pymupdf>=1.24",
+    "python-docx>=1.1",
+    "openpyxl>=3.1",
+    # Phase 3: OCR + Security
+    "pytesseract>=0.3",
+    "Pillow>=10.0",
+    "python-magic>=0.4",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+paddle = ["paddleocr>=2.7", "paddlepaddle>=2.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["docuwing_engine"]
+
+[project.entry-points."docuwing.plugins"]
+# Parser plugins
+pdf_text_parser = "docuwing_engine.parsers.pdf_text.plugin:PdfTextParser"
+docx_parser = "docuwing_engine.parsers.docx.plugin:DocxParser"
+xlsx_parser = "docuwing_engine.parsers.xlsx.plugin:XlsxParser"
+csv_parser = "docuwing_engine.parsers.csv.plugin:CsvParser"
+# Phase 3: OCR + scanned parsers
+pdf_scanned_parser = "docuwing_engine.parsers.pdf_scanned:PdfScannedParserPlugin"
+image_parser = "docuwing_engine.parsers.image:ImageParserPlugin"
+tesseract_ocr = "docuwing_engine.ocr.tesseract:TesseractOCRPlugin"
