@@ -1,1 +1,1 @@
-"use client"; import { useParams } from "next/navigation"; import { ChatPanel } from "../../../components/chat-panel"; export default function Chat(){const {id}=useParams<{id:string}>();return <main className="shell"><ChatPanel documentId={id}/></main>}
+"use client"; import { useParams } from "next/navigation"; import { ChatPanel } from "../../../../components/chat-panel"; export default function Chat(){const {id}=useParams<{id:string}>();return <main className="shell"><ChatPanel documentId={id}/></main>}
