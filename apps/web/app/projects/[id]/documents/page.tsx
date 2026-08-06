@@ -1,3 +1,0 @@
-"use client";
-import { useParams } from "next/navigation";import { useState } from "react";import { api } from "../../../../lib/api";
-export default function Documents(){const {id}=useParams<{id:string}>();const [message,setMessage]=useState("");return <main className="shell"><h1>Documents</h1><form className="panel stack" onSubmit={async e=>{e.preventDefault();const file=(e.currentTarget.elements.namedItem("file") as HTMLInputElement).files?.[0];if(!file)return;const form=new FormData();form.append("file",file);const r=await api<{document_id:string}>(`/projects/${id}/documents`,{method:"POST",body:form});setMessage(`Uploaded. Document ID: ${r.document_id}`)}}><input name="file" type="file"/><button>Upload document</button>{message&&<p>{message}</p>}</form></main>}

@@ -1,3 +1,0 @@
-[
-  {"document_id": "invoice-001", "expected": {"vendor": "Acme", "total": 25}}
-]
